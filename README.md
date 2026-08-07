@@ -1,8 +1,8 @@
-# O Correspondente — Portfólio de Desenvolvedor
+# SAKUYA.DEV — Portfólio estilo mangá
 
-Portfólio pessoal construído como um jornal editorial: fundo branco, tipografia
-fina (Newsreader + IBM Plex Mono), animações com anime.js e um elemento de
-assinatura em 3D (campo de pontos "halftone") feito com three.js.
+Portfólio de programador em Next.js (App Router), com animações em GSAP e anime.js,
+inspirado visualmente em capas e páginas de mangá: papel envelhecido, halftone,
+tinta preta grossa, carimbo hanko vermelho e cards de projeto recortados como tirinhas.
 
 ## Rodando localmente
 
@@ -13,29 +13,35 @@ npm run dev
 
 Abra http://localhost:3000
 
-## Build de produção
+> A primeira build precisa de internet para baixar as fontes do Google Fonts
+> (Anton, Shippori Antique B1, Zen Kaku Gothic New, JetBrains Mono) — isso é
+> automático via `next/font/google`, não precisa configurar nada.
 
-```bash
-npm run build
-npm start
-```
+## Páginas
 
-## Estrutura
+- `/` — capa (hero) + resumo dos projetos em cards recortados ("tirinhas")
+- `/sobre` — ficha de personagem: skills como barras de atributo (anime.js),
+  ferramentas como "equipamentos" e diferenciais como "golpes especiais"
+- `/projetos` — cada projeto detalhado como um capítulo de mangá, com stack,
+  papel no projeto e links
 
-- `src/app/page.js` — página inicial, com as capas dos projetos
-- `src/app/sobre/page.js` — página "Sobre", com soft e hard skills
-- `src/app/projetos/[slug]/page.js` — página de detalhamento de cada projeto
-- `src/lib/projects.js` — **edite aqui** para trocar os projetos pelos seus
-- `src/lib/skills.js` — **edite aqui** para trocar as habilidades e a linha do tempo
-- `src/components/HalftoneField.js` — o campo de pontos 3D (three.js)
-- `src/components/RevealText.js` / `ScrollReveal.js` — animações com anime.js
-- `public/fonts/` — fontes auto-hospedadas (Newsreader, IBM Plex Mono) em .woff2
+## Onde editar o conteúdo
 
-## Pontos para personalizar
+- `lib/projects.ts` — dados dos 3 projetos (troque pelos seus)
+- `components/Hero.tsx` — nome, tagline e texto de capa
+- `app/sobre/page.tsx` — skills, ferramentas e "golpes especiais"
+- `components/Footer.tsx` — links de contato (GitHub, LinkedIn, email)
+- `components/CoverArt.tsx` / `components/CharacterPortrait.tsx` — arte de capa
+  gerada em SVG (placeholder). Troque por `<img>`/screenshots reais quando
+  tiver artes ou prints dos projetos.
 
-1. Troque "Seu Nome" em `src/app/page.js` (hero) pelo seu nome real.
-2. Ajuste o e-mail e links em `src/components/Footer.js`.
-3. Substitua o conteúdo de `src/lib/projects.js` pelos seus projetos reais
-   (a capa de cada um é gerada automaticamente em SVG a partir do campo `hue`,
-   sem precisar de imagens).
-4. Ajuste `hardSkills`, `softSkills` e `timeline` em `src/lib/skills.js`.
+## Animação
+
+- **GSAP + ScrollTrigger**: entrada do hero, reveals ao rolar a página,
+  hover dos cards de projeto (`components/Reveal.tsx`, `components/ProjectStrip.tsx`)
+- **anime.js**: barras de skill que enchem ao entrar na tela, selo hanko
+  balançando e seta de scroll pulsando (`components/SkillBar.tsx`, `components/Hero.tsx`)
+
+## Stack
+
+Next.js 16 (App Router, Turbopack) · TypeScript · Tailwind CSS v4 · GSAP · anime.js v4
